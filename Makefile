@@ -1,4 +1,4 @@
-.PHONY: build etl train all clean viz audit trends interactive geographic
+.PHONY: build etl train all clean viz audit trends interactive geographic predictions
 
 build:
 	docker compose build
@@ -59,3 +59,7 @@ geographic:
 		docker compose run --rm app python src/etl/fetch_geojson.py; \
 	fi
 	docker compose run --rm app src/viz/geographic_analyzer.py --data data/processed_csv/master_ml.csv --output reports/geographic --all-elections
+
+# Generate future predictions (1, 2, 3 years)
+predictions:
+	docker compose run --rm app src/viz/future_predictions.py --data data/processed_csv/master_ml.csv --output reports/predictions --years 2025 2026 2027

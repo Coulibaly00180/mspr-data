@@ -289,6 +289,7 @@ def main():
     parser.add_argument("--skip-interactive", action="store_true", help="Ignorer le dashboard interactif")
     parser.add_argument("--skip-geographic", action="store_true", help="Ignorer l'analyse géographique")
     parser.add_argument("--skip-audit", action="store_true", help="Ignorer l'audit des données")
+    parser.add_argument("--skip-predictions", action="store_true", help="Ignorer les prédictions futures")
     
     args = parser.parse_args()
     
@@ -337,10 +338,20 @@ def main():
         ], "Génération des analyses géographiques")
         results['geographic'] = success
     
-    # 5. Génération de l'index maître
+    # 5. Prédictions futures (si pas ignoré)
+    if not args.skip_predictions:
+        success, output = run_command([
+            'python', '/app/src/viz/future_predictions.py',
+            '--data', args.data,
+            '--output', os.path.join(args.output, 'predictions'),
+            '--years', '2025', '2026', '2027'
+        ], "Génération des prédictions futures")
+        results['predictions'] = success
+    
+    # 6. Génération de l'index maître
     index_file = create_master_index(args.output)
     
-    # 6. Rapport de synthèse
+    # 7. Rapport de synthèse
     print(f"\n📋 RAPPORT DE SYNTHÈSE")
     print(f"=" * 50)
     
