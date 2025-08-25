@@ -1,0 +1,21 @@
+=== RAPPORT D'ANALYSE DES TENDANCES ÉLECTORALES ===
+
+Période analysée: 2012 - 2022
+Nombre de communes: 24
+Nombre d'élections: 312
+Types de scrutin: europeenne, legislative, municipale, presidentielle
+Participation moyenne: 65.4%
+
+Principales familles politiques:
+  1. RE
+  2. PS
+  3. RN
+  4. LFI
+  5. EELV
+
+Fichiers générés: 5 graphiques
+  - evolution_familles_politiques.png
+  - evolution_participation.png
+  - comparaison_scrutins.png
+  - tendances_socioeconomiques.png
+  - matrice_correlation.png

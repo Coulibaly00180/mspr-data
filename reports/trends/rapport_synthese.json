@@ -1,0 +1,26 @@
+{
+  "periode_analysee": "2012 - 2022",
+  "nb_communes": 24,
+  "nb_elections": 312,
+  "types_scrutin": [
+    "europeenne",
+    "legislative",
+    "municipale",
+    "presidentielle"
+  ],
+  "principales_familles": [
+    "RE",
+    "PS",
+    "RN",
+    "LFI",
+    "EELV"
+  ],
+  "participation_moyenne": "65.4%",
+  "fichiers_generes": [
+    "evolution_familles_politiques.png",
+    "evolution_participation.png",
+    "comparaison_scrutins.png",
+    "tendances_socioeconomiques.png",
+    "matrice_correlation.png"
+  ]
+}
