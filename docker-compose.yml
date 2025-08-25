@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    container_name: mspr_nantes_app
+    volumes:
+      - ./data:/app/data
+      - ./reports:/app/reports
+      - ./docs:/app/docs
+      - ./logs:/app/logs
+    environment:
+      - PYTHONPATH=/app
+      - MPLCONFIGDIR=/tmp/matplotlib
+    working_dir: /app
+    command: python app.py

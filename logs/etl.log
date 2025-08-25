@@ -1,0 +1,48 @@
+THIS IS THE NEW SCRIPT
+--- Debugging ---
+Raw data directory: data/raw_csv
+Files in raw_dir:
+- .gitkeep
+- communes_nantes_metropole.csv
+- elections_master_2012_2022.csv
+- europeenne_2014_tour1_par_commune.csv
+- europeenne_2014_tour1_vainqueur_commune.csv
+- europeenne_2019_tour1_par_commune.csv
+- europeenne_2019_tour1_vainqueur_commune.csv
+- indicateurs_2012_2022.csv
+- legislative_2012_tour1_par_commune.csv
+- legislative_2012_tour1_vainqueur_commune.csv
+- legislative_2017_tour1_par_commune.csv
+- legislative_2017_tour1_vainqueur_commune.csv
+- legislative_2022_tour1_par_commune.csv
+- legislative_2022_tour1_vainqueur_commune.csv
+- municipale_2014_tour1_par_commune.csv
+- municipale_2014_tour1_vainqueur_commune.csv
+- municipale_2020_tour1_par_commune.csv
+- municipale_2020_tour1_vainqueur_commune.csv
+- nuances_politiques.csv
+- presidentielle_2012_tour1_par_commune.csv
+- presidentielle_2012_tour1_vainqueur_commune.csv
+- presidentielle_2012_tour2_par_commune.csv
+- presidentielle_2012_tour2_vainqueur_commune.csv
+- presidentielle_2017_tour1_par_commune.csv
+- presidentielle_2017_tour1_vainqueur_commune.csv
+- presidentielle_2017_tour2_par_commune.csv
+- presidentielle_2017_tour2_vainqueur_commune.csv
+- presidentielle_2022_tour1_par_commune.csv
+- presidentielle_2022_tour1_vainqueur_commune.csv
+- presidentielle_2022_tour2_par_commune.csv
+- presidentielle_2022_tour2_vainqueur_commune.csv
+
+Dataframes loaded:
+- elections_master: (33, 16)
+- indicateurs: (264, 11)
+- communes: (24, 4)
+- nuances: (20, 7)
+
+Shape of elections dataframe after normalization: (33, 17)
+Shape of indicators dataframe after normalization: (264, 12)
+
+Shape of master dataframe after feature derivation: (33, 32)
+[OK] Wrote data/processed_csv/master_ml.csv with 33 rows and 32 columns.
+--- End Debugging ---

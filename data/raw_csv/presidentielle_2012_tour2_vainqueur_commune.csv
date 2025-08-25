@@ -1,0 +1,25 @@
+code_commune_insee,nom_commune,code_epci,type_scrutin,annee,tour,parti_en_tete,candidat_en_tete,voix_en_tete,voix_pct_en_tete,turnout_pct,blancs_pct,nuls_pct
+44009,Basse-Goulaine,244400404,presidentielle,2012,2,hollande,hollande,3021,0.6200738916256158,0.82,0.02,0.005
+44018,Bouaye,244400404,presidentielle,2012,2,hollande,hollande,2601,0.6198760724499524,0.82,0.02,0.005
+44020,Bouguenais,244400404,presidentielle,2012,2,hollande,hollande,6468,0.6200153374233128,0.82,0.02,0.005
+44024,Brains,244400404,presidentielle,2012,2,hollande,hollande,867,0.6197283774124375,0.82,0.02,0.005
+44026,Carquefou,244400404,presidentielle,2012,2,hollande,hollande,6450,0.6199538638985006,0.82,0.02,0.005
+44047,Couëron,244400404,presidentielle,2012,2,hollande,hollande,7395,0.620021799278947,0.8200000000000001,0.02,0.005
+44074,Indre,244400404,presidentielle,2012,2,hollande,hollande,1311,0.620151371807001,0.82,0.02,0.005
+44035,La Chapelle-sur-Erdre,244400404,presidentielle,2012,2,hollande,hollande,6434,0.6199653112353054,0.82,0.02,0.005
+44101,La Montagne,244400404,presidentielle,2012,2,hollande,hollande,2049,0.6199697428139183,0.82,0.02,0.005
+44120,Le Pellerin,244400404,presidentielle,2012,2,hollande,hollande,1676,0.6200517943026267,0.8199999999999998,0.02,0.005
+44198,Les Sorinières,244400404,presidentielle,2012,2,hollande,hollande,2878,0.6199913830245584,0.82,0.02,0.005
+44094,Mauves-sur-Loire,244400404,presidentielle,2012,2,hollande,hollande,1066,0.6201279813845259,0.82,0.02,0.005
+44109,Nantes,244400404,presidentielle,2012,2,hollande,hollande,102111,0.6200006071829746,0.82,0.02,0.005
+44114,Orvault,244400404,presidentielle,2012,2,hollande,hollande,8903,0.620029249947768,0.82,0.02,0.005
+44143,Rezé,244400404,presidentielle,2012,2,hollande,hollande,13617,0.620025498588471,0.82,0.02,0.005
+44150,Saint-Aignan-Grandlieu,244400404,presidentielle,2012,2,hollande,hollande,1254,0.6201780415430267,0.8199999999999998,0.02,0.005
+44162,Saint-Herblain,244400404,presidentielle,2012,2,hollande,hollande,15882,0.6200031230480949,0.82,0.02,0.005
+44166,Saint-Jean-de-Boiseau,244400404,presidentielle,2012,2,hollande,hollande,1892,0.6199213630406291,0.82,0.02,0.005
+44171,Saint-Léger-les-Vignes,244400404,presidentielle,2012,2,hollande,hollande,664,0.6199813258636788,0.82,0.02,0.005
+44190,Saint-Sébastien-sur-Loire,244400404,presidentielle,2012,2,hollande,hollande,8912,0.6199652173913044,0.82,0.02,0.005
+44172,Sainte-Luce-sur-Loire,244400404,presidentielle,2012,2,hollande,hollande,5097,0.619997567205936,0.82,0.02,0.005
+44194,Sautron,244400404,presidentielle,2012,2,hollande,hollande,2681,0.6200277520814061,0.8199999999999998,0.02,0.005
+44204,Thouaré-sur-Loire,244400404,presidentielle,2012,2,hollande,hollande,3442,0.6200684561340299,0.82,0.02,0.005
+44215,Vertou,244400404,presidentielle,2012,2,hollande,hollande,8182,0.6199893915283776,0.82,0.02,0.005
