@@ -9,7 +9,7 @@
 
 ## 📋 Résumé Exécutif
 
-Ce projet développe une **preuve de concept (POC)** pour la start-up de **M. de la Motte Rouge**, visant à prédire le parti politique qui arrivera en tête lors des élections sur un territoire géographique donné.
+Ce projet développe une **preuve de concept (POC)** pour l'entreprise **Elexxion**, visant à prédire le parti politique qui arrivera en tête lors des élections sur un territoire géographique donné.
 
 ### 🎯 Résultats Clés
 - **Modèles entraînés :** 4 algorithmes testés (Régression Logistique, Random Forest, SVM, XGBoost)
@@ -24,7 +24,7 @@ Ce projet développe une **preuve de concept (POC)** pour la start-up de **M. de
 
 ### 1.1. Contexte Métier
 
-La start-up de **M. de la Motte Rouge** souhaite développer un service de prédiction des tendances électorales pour :
+L'entreprise **Elexxion** souhaite développer un service de prédiction des tendances électorales pour :
 - **Aider les candidats** à mieux cibler leurs campagnes
 - **Fournir des analyses** aux médias et instituts de sondage  
 - **Comprendre les facteurs socio-économiques** influençant le vote
@@ -46,6 +46,105 @@ La start-up de **M. de la Motte Rouge** souhaite développer un service de préd
 **Contraintes techniques :** Solution entièrement conteneurisée avec Docker
 
 Ce dossier retrace la démarche suivie, les choix effectués, les résultats obtenus et les recommandations pour l'amélioration du système.
+
+### 1.4. Stratégie Big Data et Architecture Décisionnelle
+
+#### Vision Stratégique Big Data pour Elexxion
+
+**Objectif :** Mettre en place une architecture Big Data complète pour collecter, traiter et analyser les données électorales à grande échelle.
+
+**Pipeline de Données (Collecte → Traitement → Analyse) :**
+
+1. **📥 Collecte de Données**
+   - **Sources gouvernementales :** data.gouv.fr, INSEE, Ministère de l'Intérieur
+   - **APIs temps réel :** Récupération automatisée des nouveaux résultats
+   - **Données géospatiales :** Contours communaux, découpage électoral
+   - **Indicateurs socio-économiques :** Emploi, démographie, économie
+
+2. **⚙️ Traitement Big Data**
+   - **ETL automatisé :** Pipeline Docker reproductible
+   - **Normalisation :** Harmonisation des schémas de données
+   - **Enrichissement :** Calcul d'indicateurs dérivés
+   - **Validation qualité :** Audit automatique intégré
+
+3. **🧠 Analyse et ML**
+   - **Modèles prédictifs :** Classification multi-algorithmes
+   - **Analyse temporelle :** Détection de tendances
+   - **Clustering géographique :** Identification de zones homogènes
+   - **Prédictions prospectives :** Horizons 1-3 ans
+
+4. **📊 Visualisation et BI**
+   - **Dashboards interactifs :** Plotly, cartes choroplèthes
+   - **Rapports automatisés :** Génération de synthèses
+   - **APIs de consultation :** Interface pour clients finaux
+   - **Alerting :** Détection d'anomalies ou changements significatifs
+
+#### Architecture Technique Cible
+
+```mermaid
+graph TD
+    A[Sources Externes] --> B[Data Lake Raw]
+    B --> C[ETL Processing]
+    C --> D[Data Warehouse]
+    D --> E[ML Pipeline]
+    E --> F[Prediction Models]
+    F --> G[BI Dashboard]
+    D --> H[Real-time APIs]
+    G --> I[Client Applications]
+    H --> I
+```
+
+**Technologies recommandées pour scale-up :**
+- **Stockage :** Apache Spark, Hadoop pour volumes importants
+- **Processing :** Apache Airflow pour orchestration ETL
+- **ML :** MLflow pour versioning des modèles
+- **BI :** Apache Superset ou Grafana pour dashboards
+- **Infrastructure :** Kubernetes pour déploiement scalable
+
+### 1.5. Sécurité et Conformité RGPD
+
+#### Mesures de Sécurité Implémentées
+
+**🔒 Sécurisation des Données**
+- **Containerisation :** Isolation complète via Docker
+- **Données anonymisées :** Aucune donnée personnelle individuelle
+- **Accès restreint :** Authentification par clés SSH pour repository
+- **Logs sécurisés :** Traçabilité des accès et modifications
+
+**🛡️ Conformité RGPD**
+- **Données publiques uniquement :** Résultats électoraux agrégés
+- **Pas de tracking individuel :** Analyses au niveau communal
+- **Droit à l'oubli :** Possibilité de purge des données
+- **Transparence :** Algorithmes open source, méthodologie documentée
+
+#### Recommandations pour Production
+
+**Mesures complémentaires à implémenter :**
+
+1. **Chiffrement :**
+   - Chiffrement des données au repos (AES-256)
+   - Communications TLS pour APIs
+   - Gestion centralisée des certificats
+
+2. **Audit et Conformité :**
+   - Logs d'audit complets
+   - Monitoring des accès utilisateurs  
+   - Rapports de conformité automatisés
+   - Procédures de backup sécurisées
+
+3. **Gouvernance des Données :**
+   - Classification des données par sensibilité
+   - Politiques de rétention définies
+   - Processus de validation qualité
+   - Documentation des traitements (registre RGPD)
+
+4. **Sécurité Opérationnelle :**
+   - Authentification multi-facteur
+   - Contrôles d'accès basés sur les rôles (RBAC)
+   - Tests de pénétration réguliers
+   - Plan de réponse aux incidents
+
+**Responsable sécurité recommandé :** RSSI Elexxion ou consultant externe spécialisé cybersécurité.
 
 ## 2. Choix du Périmètre et des Données
 
@@ -236,6 +335,46 @@ Cette découverte **remet en question la validité** des résultats de modélisa
 > Recalculer le vainqueur dans l'ETL avec une agrégation par `(code_commune_insee, annee, type_scrutin, tour)`, puis refaire la jointure sur cette clé complète avant d'exporter les données.
 
 Cette correction est **essentielle** avant toute utilisation opérationnelle du système.
+
+### 5.4. Prédictions Prospectives (2025-2027)
+
+**⚠️ Note :** En raison du problème de données identifié ci-dessus, les prédictions suivantes doivent être interprétées avec précaution.
+
+#### Méthodologie de Prédiction Future
+
+**Module développé :** `src/viz/future_predictions.py`
+
+**Approche :**
+1. **Projection des tendances socio-économiques** basée sur les 3 dernières années
+2. **Scénarios multiples** pour chaque type d'élection (présidentielle, législative, européenne, municipale)
+3. **Modélisation prospective** utilisant le modèle Random Forest entraîné
+4. **Visualisations temporelles** des évolutions prédites
+
+#### Résultats Préliminaires (avec réserves)
+
+```bash
+# Génération des prédictions futures
+make predictions  # ou 
+docker compose run --rm app src/viz/future_predictions.py
+```
+
+**Prédictions par horizon :**
+- **2025 :** Stabilité des tendances observées en 2022
+- **2026 :** Légère évolution des indicateurs socio-économiques
+- **2027 :** Projection des tendances à moyen terme
+
+**Limites identifiées :**
+- **Données actuelles biaisées** (problème monochrome)
+- **Incertitude élevée** sur les projections socio-économiques
+- **Événements imprévisibles** non modélisés (crises, réformes)
+
+#### Recommandations pour les Prédictions
+
+**🔧 Après correction des données ETL :**
+1. **Ré-entraîner** les modèles sur des données corrigées
+2. **Intégrer des variables exogènes** (contexte national, crises)
+3. **Développer des intervalles de confiance** pour quantifier l'incertitude
+4. **Valider** les prédictions avec des experts politologues
 
 **Analyse :**
 *   La **Régression Logistique** et le **Random Forest** obtiennent les meilleurs scores, avec une précision de **66.7%** et un F1-score de 0.4. Cela signifie qu'ils prédisent correctement le parti en tête dans deux tiers des cas sur les données de test, ce qui est un résultat très encourageant pour une POC.
@@ -437,7 +576,7 @@ Recalculer parti_en_tete avec agrégation par (code_commune_insee, annee, type_s
 
 ### 8.4. Valeur Métier du POC 💼
 
-**🎯 Pour la Start-up :**
+**🎯 Pour Elexxion :**
 - **Preuve de faisabilité** technique établie
 - **Architecture scalable** développée  
 - **Méthodologie rigoureuse** documentée
