@@ -1,9 +1,60 @@
 #!/usr/bin/env python3
 """
-Module de prédictions prospectives - Élections futures 1, 2 et 3 ans
+Module de prédictions prospectives pour les élections futures.
 
-Génère des prédictions à partir du modèle entraîné pour les années futures
-et visualise les tendances prospectives.
+Ce module utilise les modèles de machine learning entraînés sur les données
+historiques 2012-2022 pour projeter les résultats électoraux futurs sur
+un horizon de 1 à 3 ans (2025-2027).
+
+Fonctionnalités prédictives:
+
+    🔮 Prédictions multi-horizons temporels
+       - Année N+1 : Prédictions haute confiance
+       - Année N+2 : Prédictions confiance modérée  
+       - Année N+3 : Prédictions exploratoires
+       - Intervalles de confiance adaptatifs
+
+    📊 Scénarios électoraux multiples
+       - Scénario de continuité : Prolongement des tendances actuelles
+       - Scénario de rupture : Impact d'événements politiques majeurs
+       - Scénario médian : Moyenne pondérée des deux précédents
+       - Analyse de sensibilité aux variables socio-économiques
+
+    🎯 Visualisations prospectives
+       - Cartes électorales prédictives par commune
+       - Évolution projetée des familles politiques
+       - Barres d'incertitude et zones de confiance
+       - Comparaisons avec les cycles électoraux passés
+
+    📈 Métriques de fiabilité prédictive  
+       - Scores de confiance par prédiction
+       - Analyse des features les plus influentes
+       - Détection des anomalies prédictives
+       - Validation croisée temporelle
+
+Architecture prédictive:
+    Modèle entraîné → Features prospectives → Prédictions → Visualisations
+    
+    Les features prospectives sont construites par :
+    - Extrapolation linéaire des tendances socio-économiques
+    - Projection démographique INSEé
+    - Hypothèses sur l'évolution politique nationale
+    - Prise en compte des cycles électoraux
+
+Limitations et précautions:
+    ⚠️ Les prédictions reposent sur la stabilité des patterns historiques
+    ⚠️ Les ruptures politiques majeures ne sont pas prévisibles
+    ⚠️ L'incertitude augmente avec l'horizon temporel
+    ⚠️ Validation humaine requise pour l'interprétation
+
+Usage:
+    python src/viz/future_predictions.py [--years 2025,2026,2027]
+
+Modèle requis:
+    Le modèle Random Forest entraîné (reports/random_forest.joblib)
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 
 import argparse
@@ -38,7 +89,33 @@ def setup_matplotlib():
     })
 
 def load_model_and_data(model_path, data_path):
-    """Charge le modèle entraîné et les données historiques"""
+    """
+    Charge le modèle entraîné et les données historiques pour les prédictions.
+    
+    Cette fonction récupère les composants nécessaires aux prédictions :
+    - Modèle Random Forest sérialisé avec ses hyperparamètres optimaux
+    - Pipeline de preprocessing (StandardScaler, encoders)
+    - Données historiques pour calibrer les projections
+    - Features importantes pour guider l'extrapolation
+    
+    Args:
+        model_path (str): Chemin vers le fichier .joblib du modèle entraîné
+        data_path (str): Chemin vers le dataset master_ml.csv
+        
+    Returns:
+        tuple: (model, df_historical, feature_names, target_classes)
+            - model: Modèle Random Forest chargé
+            - df_historical: Dataset historique pour référence
+            - feature_names: Liste des noms de features utilisées
+            - target_classes: Classes cibles (familles politiques)
+            
+    Raises:
+        FileNotFoundError: Si le modèle n'a pas été entraîné au préalable
+        
+    Note:
+        Cette fonction suppose que le pipeline d'entraînement a été
+        exécuté et qu'un modèle Random Forest a été sauvegardé.
+    """
     print(f"📊 Chargement du modèle depuis {model_path}")
     
     try:

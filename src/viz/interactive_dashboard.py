@@ -1,8 +1,59 @@
 #!/usr/bin/env python3
 """
-Dashboard interactif pour l'exploration des données électorales
+Module de génération de dashboards interactifs pour l'exploration électorale.
 
-Génère des visualisations HTML interactives avec plotly pour une analyse approfondie.
+Ce module crée une suite de visualisations web interactives utilisant Plotly
+pour permettre l'exploration dynamique des données électorales de Nantes Métropole.
+Les dashboards générés sont des fichiers HTML autonomes, consultables dans 
+n'importe quel navigateur sans serveur requis.
+
+Dashboards générés:
+
+    📊 dashboard_electoral.html
+       - Vue d'ensemble multi-dimensionnelle des résultats
+       - Graphiques interconnectés avec filtres dynamiques  
+       - Evolution temporelle des familles politiques
+       - Comparaisons inter-scrutins avec animations
+
+    📈 timeline_interactive.html
+       - Chronologie électorale interactive sur la décennie
+       - Zoom temporel et navigation par périodes
+       - Annotations des événements politiques majeurs
+       - Filtres par type d'élection et commune
+
+    🔥 participation_heatmap.html
+       - Carte thermique de la participation par commune/année
+       - Détection visuelle des patterns d'abstention
+       - Comparaisons territoriales facilitées
+       - Gradients colorés adaptatifs
+
+    ☀️ party_distribution_sunburst.html
+       - Visualisation hiérarchique des victoires électorales
+       - Navigation drill-down : Familles → Partis → Candidats
+       - Proportions dynamiques selon les filtres
+       - Interface intuitive pour explorer la complexité
+
+    🎯 socioeconomic_scatter.html
+       - Analyses multivariées des corrélations socio-économiques
+       - Nuages de points interactifs avec régressions
+       - Identification des communes atypiques
+       - Exploration guidée des relations causales
+
+Fonctionnalités techniques:
+    - Export HTML autonome (pas de serveur requis)
+    - Interface responsive adaptée mobile/desktop
+    - Performance optimisée pour datasets importants
+    - Tooltips informatifs et légendes interactives
+    - Thème visuel cohérent avec l'identité du projet
+
+Usage:
+    python src/viz/interactive_dashboard.py [--output-dir /path/to/reports/interactive]
+
+Dépendances:
+    pip install plotly pandas numpy
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 
 import argparse
@@ -23,7 +74,29 @@ except ImportError:
     print("⚠️  Plotly non disponible. Installation requise: pip install plotly")
 
 def load_data(filepath):
-    """Charge et prépare les données"""
+    """
+    Charge et prépare les données électorales pour les visualisations interactives.
+    
+    Cette fonction effectue le preprocessing nécessaire pour optimiser
+    les performances des dashboards Plotly :
+    - Conversion des types de données appropriés
+    - Nettoyage des valeurs manquantes critiques
+    - Formatage des dates pour les timelines
+    - Validation de la cohérence des données
+    
+    Args:
+        filepath (str): Chemin vers le fichier master_ml.csv
+        
+    Returns:
+        pd.DataFrame: Dataset nettoyé et optimisé pour Plotly
+        
+    Raises:
+        SystemExit: Si le fichier est introuvable ou corrompu
+        
+    Note:
+        Les données manquantes en famille_politique et année sont supprimées
+        car elles sont critiques pour toutes les visualisations.
+    """
     print(f"Chargement des données depuis {filepath}")
     
     try:

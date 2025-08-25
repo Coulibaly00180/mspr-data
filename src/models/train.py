@@ -1,9 +1,38 @@
+#!/usr/bin/env python3
 """
-Script d'entraînement du modèle.
+Module d'entraînement et d'évaluation des modèles de prédiction électorale.
 
-Ce script charge le jeu de données maître traité, le divise en ensembles d'entraînement et de test,
-applique le prétraitement, entraîne divers modèles de classification (Régression Logistique, Random Forest, SVM, XGBoost),
-évalue leurs performances et sauvegarde les résultats (métriques, matrices de confusion, rapports de classification).
+Ce module constitue le cœur du système de machine learning pour la prédiction 
+des résultats électoraux de Nantes Métropole. Il implémente un pipeline complet
+de classification multi-modèles avec validation temporelle.
+
+Architecture ML:
+    Données → Préprocessing → Multiple Modèles → Évaluation → Sélection
+
+Modèles implémentés:
+    1. 🔵 Régression Logistique - Modèle de référence rapide et interprétable
+    2. 🌲 Random Forest - Ensemble method avec importance des features  
+    3. ⚡ SVM - Support Vector Machine pour frontières complexes
+    4. 🚀 XGBoost - Gradient boosting state-of-the-art
+
+Stratégie de validation:
+    - Séparation temporelle : années récentes pour le test (réalisme)
+    - Preprocessing pipelines : StandardScaler + OneHotEncoder
+    - Métriques multiples : Accuracy, F1-macro, matrice de confusion
+    - Feature importance pour l'interprétabilité
+
+Sorties générées:
+    - Modèles sérialisés (.joblib)
+    - Rapports de classification détaillés
+    - Matrices de confusion visuelles
+    - Métriques de performance (CSV)
+    - Feature importances (Random Forest)
+
+Usage:
+    python src/models/train.py --data /path/to/master_ml.csv [--test-years 2022]
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 import argparse, os, sys, json
 from sklearn.impute import SimpleImputer
@@ -23,8 +52,36 @@ from src.common.io import ensure_dir, read_csv_safe
 
 def build_datasets(path, label_col="parti_en_tete", test_years=None, drop_estime=True):
     """
-    Charge le jeu de données maître, le divise en ensembles d'entraînement et de test basés sur les années,
-    et définit les caractéristiques numériques et catégorielles.
+    Construit les datasets d'entraînement et de test avec validation temporelle.
+    
+    Cette fonction implémente une stratégie de split temporel réaliste :
+    - Les données historiques servent à l'entraînement
+    - Les données récentes (test_years) servent à la validation
+    - Preprocessing automatique des types de données
+    - Filtrage des données estimées/incomplètes
+    
+    La validation temporelle est cruciale car elle simule un cas d'usage réel :
+    prédire les élections futures à partir du passé.
+    
+    Args:
+        path (str): Chemin vers le fichier master_ml.csv
+        label_col (str): Nom de la colonne cible à prédire (default: "parti_en_tete")
+        test_years (list): Années à utiliser pour le test. Si None, utilise la dernière année
+        drop_estime (bool): Si True, supprime les données estimées/synthétiques
+        
+    Returns:
+        tuple: (X_train, X_test, y_train, y_test, num_features, cat_features)
+            - X_train/X_test: Features d'entraînement et de test
+            - y_train/y_test: Labels d'entraînement et de test  
+            - num_features: Liste des colonnes numériques
+            - cat_features: Liste des colonnes catégorielles
+            
+    Raises:
+        ValueError: Si des colonnes essentielles sont manquantes
+        
+    Note:
+        La séparation temporelle garantit qu'aucune information du futur
+        ne "fuite" dans l'entraînement, respectant le principe de causalité.
     """
     df = read_csv_safe(path)
     # Supprime les données estimées si la colonne 'estime' existe et est vraie.

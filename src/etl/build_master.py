@@ -1,3 +1,26 @@
+#!/usr/bin/env python3
+"""
+Module ETL (Extract, Transform, Load) pour la construction du dataset maître.
+
+Ce module constitue le cœur du preprocessing des données électorales :
+- Extraction des données brutes depuis les fichiers CSV sources
+- Transformation et harmonisation des schémas de données
+- Jointure avec les indicateurs socio-économiques des communes
+- Calcul de features engineerées (ratios, deltas, variables dérivées)
+- Chargement dans un fichier master unifié pour le machine learning
+
+Architecture ETL:
+    Raw Data → Transform → Join → Feature Engineering → Master Dataset
+
+Fichiers d'entrée attendus:
+    - *_par_commune.csv : Données électorales détaillées par commune
+    - indicateurs_*.csv : Indicateurs socio-économiques
+    - communes_*.csv : Référentiel des communes de Nantes Métropole
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
+"""
+
 import argparse
 import os
 import sys
@@ -5,17 +28,27 @@ import pandas as pd
 import numpy as np
 from src.common.io import ensure_dir, read_csv_safe, write_csv_safe
 
-# ETL:
-# - charge data/raw_csv
-# - harmonise schémas et clés
-# - joint les indicateurs
-# - calcule features (per capita, deltas, vainqueur précédent)
-# - exporte data/processed_csv/master_ml.csv
-
 def load_raw(data_dir: str):
     """
-    Charge les données brutes à partir des fichiers CSV dans le répertoire spécifié.
-    Priorise les fichiers d'élection détaillés (*_par_commune.csv) par rapport aux fichiers maîtres.
+    Charge et agrège les données brutes depuis le répertoire source.
+    
+    Cette fonction implémente une stratégie de chargement intelligente qui :
+    1. Priorise les fichiers détaillés (*_par_commune.csv) - données granulaires
+    2. Se rabat sur les fichiers maîtres si nécessaire - données agrégées
+    3. Charge les référentiels complémentaires (indicateurs, communes)
+    
+    Args:
+        data_dir (str): Chemin vers le répertoire contenant les fichiers CSV sources
+        
+    Returns:
+        dict: Dictionnaire contenant les DataFrames chargés:
+            - 'elections_master': Données électorales consolidées
+            - 'indicateurs': Indicateurs socio-économiques par commune
+            - 'communes': Référentiel des communes de la métropole
+            
+    Note:
+        La priorisation des fichiers *_par_commune.csv permet d'obtenir
+        la granularité maximale pour l'analyse ML.
     """
     raw = {}
     files = os.listdir(data_dir)

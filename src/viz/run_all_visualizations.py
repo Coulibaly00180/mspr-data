@@ -1,8 +1,30 @@
 #!/usr/bin/env python3
 """
-Script unifié pour générer toutes les visualisations
+Orchestrateur principal pour la génération complète de visualisations.
 
-Exécute les différents analyseurs de tendances et génère un rapport complet.
+Ce script coordonne l'exécution de tous les modules d'analyse et de visualisation
+du projet électoral de Nantes Métropole. Il constitue le point d'entrée unique
+pour générer l'ensemble des rapports, graphiques et dashboards.
+
+Modules orchestrés:
+    1. 🔍 Audit (audit_winner.py) - Contrôle qualité des données
+    2. 📈 Trends (trends_analyzer.py) - Analyse des tendances temporelles  
+    3. 🎯 Interactive (interactive_dashboard.py) - Dashboards web interactifs
+    4. 🗺️ Geographic (geographic_analyzer.py) - Cartographie électorale
+
+Architecture de sortie:
+    reports/
+    ├── audit/          # Rapports de contrôle qualité
+    ├── trends/         # Analyses temporelles
+    ├── interactive/    # Dashboards HTML  
+    ├── geographic/     # Cartes et analyses spatiales
+    └── index.html      # Point d'entrée unifié
+
+Usage:
+    python src/viz/run_all_visualizations.py [--output-dir DIRECTORY]
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 
 import argparse
@@ -14,7 +36,24 @@ from datetime import datetime
 from pathlib import Path
 
 def run_command(command, description):
-    """Exécute une commande et gère les erreurs"""
+    """
+    Exécute une commande système avec gestion d'erreurs robuste.
+    
+    Cette fonction encapsule l'exécution de sous-processus avec :
+    - Capture et affichage des sorties standard et d'erreur
+    - Gestion des codes de retour non-zéro
+    - Logging détaillé pour le debugging
+    - Tolérance aux erreurs pour permettre l'exécution partielle
+    
+    Args:
+        command (list): Liste des arguments de la commande à exécuter
+        description (str): Description humaine de l'opération
+        
+    Returns:
+        tuple: (success: bool, output: str) 
+               - success: True si la commande a réussi
+               - output: Sortie standard ou message d'erreur
+    """
     print(f"\n🔄 {description}")
     print(f"💻 Commande: {' '.join(command)}")
     

@@ -1,32 +1,108 @@
+#!/usr/bin/env python3
+"""
+Module d'audit de la qualité des données électorales.
+
+Ce script effectue une analyse critique de la cohérence et de la diversité 
+des données électorales de Nantes Métropole. Il détecte notamment :
+
+- Présence des colonnes requises pour l'analyse
+- Variation des vainqueurs par commune et élection
+- Identification des élections "monochromes" (même vainqueur partout)
+- Statistiques de diversité politique territoriale
+- Génération de rapports d'audit pour améliorer la qualité des prédictions
+
+Objectif : S'assurer que les données sont suffisamment diversifiées
+pour permettre un apprentissage machine efficace.
+
+Usage:
+    python src/audit_winner.py
+    
+Sorties:
+    - Rapport console détaillé
+    - Fichier CSV d'audit dans reports/checks/
+    
+Auteur: Équipe MSPR Nantes  
+Date: 2024-2025
+"""
+
 import pandas as pd
 import numpy as np
 import os
 import sys
+from pathlib import Path
 
-# Load the CSV file
-try:
-    df = pd.read_csv('/app/data/processed_csv/master_ml.csv')
-except FileNotFoundError:
-    try:
-        df = pd.read_csv('data/processed_csv/master_ml.csv')
-    except FileNotFoundError:
-        print("Error: master_ml.csv file not found in expected locations")
-        sys.exit(1)
+def load_dataset():
+    """
+    Charge le dataset master avec une stratégie de chemins multiples.
+    
+    Teste plusieurs emplacements possibles pour le fichier master_ml.csv
+    afin d'assurer la compatibilité Docker et locale.
+    
+    Returns:
+        pd.DataFrame: Dataset chargé
+        
+    Raises:
+        SystemExit: Si aucun fichier n'est trouvé
+    """
+    # Chemins possibles pour le fichier master (Docker et local)
+    possible_paths = [
+        '/app/data/processed_csv/master_ml.csv',  # Chemin Docker
+        'data/processed_csv/master_ml.csv',       # Chemin local relatif
+        'src/../data/processed_csv/master_ml.csv'  # Chemin alternatif
+    ]
+    
+    for path in possible_paths:
+        try:
+            df = pd.read_csv(path)
+            print(f"✅ Dataset chargé depuis: {path}")
+            return df
+        except FileNotFoundError:
+            continue
+    
+    print("❌ Erreur: fichier master_ml.csv introuvable dans les emplacements attendus")
+    print(f"Chemins testés: {possible_paths}")
+    sys.exit(1)
 
-print('=== AUDIT: Winner variation per commune ===\n')
+def check_required_columns(df):
+    """
+    Vérifie la présence des colonnes essentielles pour l'audit.
+    
+    Args:
+        df (pd.DataFrame): Dataset à auditer
+        
+    Returns:
+        bool: True si toutes les colonnes requises sont présentes
+    """
+    required_cols = [
+        'code_commune_insee',  # Identifiant unique de commune
+        'annee',              # Année de l'élection  
+        'type_scrutin',       # Type d'élection (présidentielle, etc.)
+        'tour',               # Tour de scrutin (1 ou 2)
+        'parti_en_tete'       # Parti vainqueur dans la commune
+    ]
+    
+    missing_cols = [col for col in required_cols if col not in df.columns]
+    
+    print('=== AUDIT: Contrôle qualité des données électorales ===\n')
+    print('1. 🔍 Vérification de l\'intégrité des colonnes:')
+    
+    if missing_cols:
+        print(f'   ❌ Colonnes manquantes: {missing_cols}')
+        print('   ⚠️  Impact: Audit limité par manque de données')
+        return False
+    else:
+        print('   ✅ Toutes les colonnes requises sont présentes')
+    
+    print(f'   📊 Dimensions du dataset: {df.shape[0]} lignes × {df.shape[1]} colonnes')
+    print()
+    
+    return True
 
-# 1. Check column presence
-required_cols = ['code_commune_insee', 'annee', 'type_scrutin', 'tour', 'parti_en_tete']
-missing_cols = [col for col in required_cols if col not in df.columns]
+# Chargement principal du dataset
+df = load_dataset()
 
-print('1. Column presence check:')
-if missing_cols:
-    print(f'   ❌ Missing columns: {missing_cols}')
-else:
-    print('   ✅ All required columns present')
-
-print(f'   Dataset shape: {df.shape}')
-print()
+# Vérification de l'intégrité des colonnes
+columns_ok = check_required_columns(df)
 
 # 2. Check uniqueness of key combination
 key_cols = ['code_commune_insee', 'annee', 'type_scrutin', 'tour']

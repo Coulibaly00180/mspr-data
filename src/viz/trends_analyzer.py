@@ -1,12 +1,47 @@
 #!/usr/bin/env python3
 """
-Script de visualisation des tendances électorales - Nantes Métropole
+Module d'analyse des tendances électorales temporelles.
 
-Génère plusieurs types de graphiques pour analyser l'évolution des tendances politiques:
-- Évolution temporelle des partis
-- Comparaison entre types de scrutin
-- Analyse de la participation
-- Tendances socio-économiques
+Ce module génère une suite complète de visualisations pour comprendre
+l'évolution politique de Nantes Métropole sur la période 2012-2022.
+
+Analyses produites:
+    📈 evolution_familles_politiques.png
+       - Évolution des scores des principales familles politiques
+       - Identification des cycles politiques et points de rupture
+       - Visualisation des recompositions du paysage partisan
+       
+    🗳️ evolution_participation.png  
+       - Tendances de mobilisation électorale par type de scrutin
+       - Détection des dynamiques d'abstention
+       - Comparaison inter-scrutins sur la décennie
+       
+    🔍 comparaison_scrutins.png
+       - Analyse comparative des résultats par type d'élection
+       - Mise en évidence des logiques électorales spécifiques
+       - Identification des votes de confirmation/sanction
+       
+    💰 tendances_socioeconomiques.png
+       - Corrélations entre indicateurs sociaux et votes
+       - Impact des évolutions démographiques
+       - Relations revenus/chômage vs comportements électoraux
+       
+    🔗 matrice_correlation.png
+       - Heatmap des corrélations entre toutes les variables
+       - Détection des patterns cachés dans les données
+       - Aide à la sélection de features pour le ML
+
+Méthodologie:
+    - Agrégation temporelle des données communales
+    - Calcul de moyennes pondérées par population
+    - Lissage des courbes par moyennes mobiles
+    - Standardisation des échelles pour comparabilité
+
+Usage:
+    python src/viz/trends_analyzer.py [--output-dir /path/to/reports/trends]
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 
 import argparse

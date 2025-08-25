@@ -1,9 +1,58 @@
 #!/usr/bin/env python3
 """
-Analyseur géographique pour les tendances électorales
+Module d'analyse géographique et de cartographie électorale.
 
-Génère des cartes choroplèthes et analyses spatiales des résultats électoraux.
-Intègre les données GeoJSON des communes de Nantes Métropole.
+Ce module produit une cartographie complète des résultats électoraux de 
+Nantes Métropole, permettant l'identification des patterns spatiaux et 
+des dynamiques territoriales du vote.
+
+Fonctionnalités principales:
+
+    🗺️ Cartes choroplèthes par élection
+       - Une carte par scrutin (13 élections de 2012 à 2022)
+       - Visualisation du parti vainqueur par commune
+       - Palette de couleurs politique cohérente
+       - Légendes détaillées avec scores
+
+    📊 Cartes de participation électorale  
+       - Visualisation des taux de participation par commune
+       - Gradients thermiques pour identifier les "déserts civiques"
+       - Comparaisons inter-élections pour détecter les tendances
+       - Corrélations spatiales avec facteurs socio-économiques
+
+    📈 Analyse de stabilité politique territoriale
+       - Calcul de l'indice de volatilité par commune
+       - Identification des bastions et zones de bascule
+       - Mesure de la cohérence territoriale métropolitaine
+       - Export CSV des métriques de stabilité
+
+    🎯 Détection de patterns géographiques
+       - Clustering automatique des communes similaires  
+       - Identification des effets de proximité/contagion
+       - Analyse des corrélations spatiales (Moran's I)
+       - Cartographie des anomalies territoriales
+
+Architecture cartographique:
+    - Données GeoJSON officielles des communes (IGN/INSEE)
+    - Projection Lambert-93 pour précision géographique  
+    - Rendu haute résolution (300 DPI) pour publication
+    - Export PNG avec métadonnées complètes
+
+Métriques calculées:
+    - Volatilité = nb_changements_vainqueur / nb_élections
+    - Dominance = max(scores_parti) / nb_élections_parti
+    - Cohérence = 1 - variance_normalized(scores_territoriaux)
+
+Usage:
+    python src/viz/geographic_analyzer.py [--geojson-path /path/to/communes.geojson]
+
+Dépendances géographiques:
+    - Fichier GeoJSON des communes (src/etl/fetch_geojson.py)
+    - Matplotlib avec support cartographique
+    - Correspondance codes INSEE/noms communes
+
+Auteur: Équipe MSPR Nantes
+Date: 2024-2025
 """
 
 import argparse
@@ -19,7 +68,33 @@ import matplotlib.cm as cm
 from pathlib import Path
 
 def load_data(data_path, geojson_path):
-    """Charge les données électorales et géographiques"""
+    """
+    Charge et synchronise les données électorales avec les géométries communales.
+    
+    Cette fonction effectue la jointure critique entre :
+    - Données électorales tabulaires (master_ml.csv)  
+    - Géométries vectorielles des communes (GeoJSON)
+    
+    Le matching se fait via les codes INSEE, avec validation de cohérence
+    pour s'assurer qu'aucune commune n'est perdue dans la jointure.
+    
+    Args:
+        data_path (str): Chemin vers le fichier master_ml.csv
+        geojson_path (str): Chemin vers le fichier GeoJSON des communes
+        
+    Returns:
+        tuple: (df_clean, geojson_data, communes_map)
+            - df_clean: DataFrame électoral nettoyé
+            - geojson_data: Données géométriques JSON
+            - communes_map: Dictionnaire code_insee -> nom_commune
+            
+    Raises:
+        SystemExit: Si les fichiers sont manquants ou incompatibles
+        
+    Note:
+        Le GeoJSON doit être généré via src/etl/fetch_geojson.py avant
+        l'utilisation de ce module.
+    """
     print(f"📂 Chargement des données depuis {data_path}")
     
     try:
