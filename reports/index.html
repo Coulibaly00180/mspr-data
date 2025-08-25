@@ -1,0 +1,206 @@
+
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Centre d'Analyse Électorale - Nantes Métropole</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                padding: 20px;
+            }
+            .container { 
+                max-width: 1200px; 
+                margin: 0 auto; 
+                background: white; 
+                border-radius: 20px; 
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                overflow: hidden;
+            }
+            .header { 
+                background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                color: white; 
+                padding: 40px; 
+                text-align: center; 
+            }
+            .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+            .header p { font-size: 1.1rem; opacity: 0.9; }
+            .content { padding: 40px; }
+            .grid { 
+                display: grid; 
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+                gap: 30px; 
+                margin-top: 30px; 
+            }
+            .card { 
+                background: white; 
+                border: 1px solid #e1e8ed;
+                border-radius: 15px; 
+                padding: 30px; 
+                box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+            .card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #3498db, #9b59b6);
+            }
+            .card:hover { 
+                transform: translateY(-5px); 
+                box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            }
+            .card-icon { 
+                font-size: 3rem; 
+                margin-bottom: 20px; 
+                display: block; 
+            }
+            .card h3 { 
+                color: #2c3e50; 
+                font-size: 1.4rem; 
+                margin-bottom: 15px; 
+            }
+            .card p { 
+                color: #7f8c8d; 
+                line-height: 1.6; 
+                margin-bottom: 20px; 
+            }
+            .btn { 
+                display: inline-block; 
+                background: linear-gradient(135deg, #3498db, #2980b9); 
+                color: white; 
+                padding: 12px 25px; 
+                text-decoration: none; 
+                border-radius: 8px; 
+                font-weight: 600;
+                transition: all 0.3s ease;
+            }
+            .btn:hover { 
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            }
+            .stats { 
+                background: #f8f9fa; 
+                padding: 25px; 
+                border-radius: 10px; 
+                margin-bottom: 30px;
+                border-left: 4px solid #3498db;
+            }
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 20px;
+            }
+            .stat-item {
+                text-align: center;
+            }
+            .stat-number {
+                font-size: 2rem;
+                font-weight: bold;
+                color: #3498db;
+                display: block;
+            }
+            .stat-label {
+                color: #7f8c8d;
+                font-size: 0.9rem;
+            }
+            .footer {
+                background: #2c3e50;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                opacity: 0.8;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>🗳️ Centre d'Analyse Électorale</h1>
+                <p>Nantes Métropole • Analyses et Visualisations Interactives</p>
+            </div>
+            
+            <div class="content">
+                <div class="stats">
+                    <h3>📊 Informations sur l'analyse</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">4</span>
+                            <span class="stat-label">Modules d'analyse</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">24</span>
+                            <span class="stat-label">Communes analysées</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2012-2022</span>
+                            <span class="stat-label">Période couverte</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">25/08/2025</span>
+                            <span class="stat-label">Dernière mise à jour</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid">
+    
+                    <div class="card">
+                        <span class="card-icon">📈</span>
+                        <h3>Analyses de Tendances</h3>
+                        <p>Évolution temporelle des familles politiques, participation électorale, corrélations socio-économiques et comparaisons entre types de scrutin.</p>
+                        <p><strong>Status:</strong> ✅ Disponible • <strong>Fichiers:</strong> 3</p>
+                        <a href="trends/index.html" class="btn" target="_blank">
+                            Ouvrir l'analyse
+                        </a>
+                    </div>
+        
+                    <div class="card">
+                        <span class="card-icon">🎯</span>
+                        <h3>Dashboard Interactif</h3>
+                        <p>Visualisations interactives avec Plotly : timeline, heatmaps, scatter plots et dashboard complet navigable dans votre navigateur.</p>
+                        <p><strong>Status:</strong> ✅ Disponible • <strong>Fichiers:</strong> 2</p>
+                        <a href="interactive/index.html" class="btn" target="_blank">
+                            Ouvrir l'analyse
+                        </a>
+                    </div>
+        
+                    <div class="card">
+                        <span class="card-icon">🗺️</span>
+                        <h3>Analyses Géographiques</h3>
+                        <p>Cartes choroplèthes des résultats électoraux, analyse de participation par commune et comparaisons géographiques multi-temporelles.</p>
+                        <p><strong>Status:</strong> ✅ Disponible • <strong>Fichiers:</strong> 1</p>
+                        <a href="geographic/index.html" class="btn" target="_blank">
+                            Ouvrir l'analyse
+                        </a>
+                    </div>
+        
+                    <div class="card">
+                        <span class="card-icon">🔍</span>
+                        <h3>Audits & Vérifications</h3>
+                        <p>Contrôles qualité des données, vérification de la cohérence des résultats et validation des calculs de vainqueurs par commune.</p>
+                        <p><strong>Status:</strong> ✅ Disponible • <strong>Fichiers:</strong> 1</p>
+                        <a href="checks/index.html" class="btn" target="_blank">
+                            Ouvrir l'analyse
+                        </a>
+                    </div>
+        
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>Généré automatiquement par le système d'analyse électorale • Claude Code</p>
+            </div>
+        </div>
+    </body>
+    </html>
+    

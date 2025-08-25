@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__ide__executeCode",
+      "Bash(python:*)",
+      "Bash(docker compose run:*)",
+      "Bash(move audit_winner.py srcaudit_winner.py)",
+      "Bash(docker compose:*)",
+      "Bash(make:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(file:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

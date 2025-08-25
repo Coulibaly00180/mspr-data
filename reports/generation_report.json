@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-08-25T11:48:16.704612",
+  "data_source": "/app/data/processed_csv/master_ml.csv",
+  "output_directory": "/app/reports",
+  "modules_executed": {
+    "audit": true,
+    "trends": true,
+    "interactive": true,
+    "geographic": true
+  },
+  "success_rate": "4/4",
+  "index_file": "/app/reports/index.html"
+}

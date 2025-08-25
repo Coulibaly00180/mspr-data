@@ -1,0 +1,43 @@
+=== RAPPORT D'ANALYSES AVANCÉES ===
+
+Période analysée: 2012-2022
+Nombre total d'élections: 312
+Nombre de communes: 24
+Participation moyenne: 65.4%
+
+=== NOUVELLES DÉCOUVERTES ===
+
+1. COMPORTEMENT ÉLECTORAL
+   - Volatilité politique moyenne: 0.769
+   - Corrélation participation-revenus: -0.090
+   - Évolution des votes blancs/nuls analysée
+
+2. FACTEURS SOCIO-ÉCONOMIQUES
+   - Impact du revenu médian sur la participation
+   - Relation chômage-vote protestataire: -0.162
+   - Influence de la démographie locale
+
+3. PATTERNS TERRITORIAUX
+   - Analyse par taille de commune
+   - Impact de l'évolution démographique
+   - Relation associations-vote écologique
+
+4. TENDANCES TEMPORELLES
+   - Évolution spécifique par candidat/parti
+   - Diversité politique par type d'élection
+   - Changements de leadership communal
+
+=== GRAPHIQUES GÉNÉRÉS ===
+- analyse_comportement_electeur.png (4 sous-graphiques)
+- impact_socioeconomique.png (6 corrélations)
+- volatilite_politique.png (4 analyses)
+- performance_candidats.png (4 visualisations)
+- patterns_demographiques.png (6 relations)
+
+Total: 5 graphiques avec 23 visualisations détaillées
+
+=== RECOMMANDATIONS POUR ANALYSES FUTURES ===
+- Approfondir l'analyse des micro-tendances locales
+- Intégrer des données qualitatives sur les enjeux locaux
+- Développer des modèles prédictifs par segmentation démographique
+- Analyser l'impact des événements politiques nationaux
