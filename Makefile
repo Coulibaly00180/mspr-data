@@ -1,4 +1,4 @@
-.PHONY: build etl train all clean
+.PHONY: build etl train all clean viz audit trends interactive geographic
 
 build:
 	docker compose build
@@ -36,3 +36,26 @@ map:
 	if [ -z "$(OUT)" ]; then export OUT=reports/figures/map_parti_en_tete.png; else export OUT=$(OUT); fi; \
 
 	docker compose run --rm app python src/etl/export_map.py --year $(YEAR) --scrutin $$SCRUTIN --tour $$TOUR --out $$OUT
+
+# Generate all visualizations and analysis
+viz:
+	docker compose run --rm app src/viz/run_all_visualizations.py
+
+# Run data quality audit
+audit:
+	docker compose run --rm app src/audit_winner.py
+
+# Generate trend analysis only
+trends:
+	docker compose run --rm app src/viz/trends_analyzer.py --data data/processed_csv/master_ml.csv --output reports/trends
+
+# Generate interactive dashboard only  
+interactive:
+	docker compose run --rm app src/viz/interactive_dashboard.py --data data/processed_csv/master_ml.csv --output reports/interactive
+
+# Generate geographic analysis only
+geographic:
+	@if [ ! -f data/geo/communes_nantes_metropole.geojson ]; then \
+		docker compose run --rm app python src/etl/fetch_geojson.py; \
+	fi
+	docker compose run --rm app src/viz/geographic_analyzer.py --data data/processed_csv/master_ml.csv --output reports/geographic --all-elections
