@@ -11,4 +11,4 @@ services:
       - PYTHONPATH=/app
       - MPLCONFIGDIR=/tmp/matplotlib
     working_dir: /app
-    command: python app.py
+    # command sera définie par le Dockerfile CMD

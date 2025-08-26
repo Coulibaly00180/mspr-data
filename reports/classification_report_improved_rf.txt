@@ -1,0 +1,18 @@
+=== RAPPORT DÉTAILLÉ - RF ===
+
+Métriques globales:
+- Accuracy: 0.6667
+- Balanced Accuracy: 0.5000
+- F1-Score (macro): 0.4000
+- F1-Score (weighted): 0.5333
+- Cohen's Kappa: 0.0000
+
+Rapport de classification sklearn:
+              precision    recall  f1-score   support
+
+         LFI       0.00      0.00      0.00        24
+          RE       0.67      1.00      0.80        48
+
+    accuracy                           0.67        72
+   macro avg       0.33      0.50      0.40        72
+weighted avg       0.44      0.67      0.53        72

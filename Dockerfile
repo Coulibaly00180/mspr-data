@@ -13,4 +13,5 @@ COPY src /app/src
 COPY docs /app/docs
 ENV PYTHONPATH=/app
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD python -V || exit 1
-ENTRYPOINT ["python"]
+COPY app.py /app/app.py
+CMD ["python", "app.py"]
