@@ -1,12 +1,11 @@
 # MSPR3 - Big Data & Analyse de Données - Dossier de Synthèse
 
 ## Informations Générales
-- **Étudiant** : [Nom Prénom]
+- **Membres** : Jean Lamarre ALFRED, Christian COULIBALY, Nene Raby DIALLO, Lexi NGO MBEA
 - **Formation** : I1 EISI - EPSI
 - **Projet** : Analyse et Prédiction des Tendances Électorales de Nantes Métropole
 - **Période** : 2024-2025
-- **Date** : 26 août 2025
-- **Contexte** : Preuve de concept pour l'entreprise Elexxion
+- **Contexte** : POC
 
 ---
 
@@ -14,7 +13,7 @@
 
 ### 1.1 Contexte et Objectifs
 
-Ce projet consiste en l'analyse des données électorales de Nantes Métropole sur la période 2012-2022 avec pour objectif de développer un système de prédiction des tendances électorales futures pour l'entreprise **Elexxion**.
+Ce projet consiste en l'analyse des données électorales de Nantes Métropole sur la période 2012-2022 avec pour objectif de développer un système de prédiction des tendances électorales futures.
 
 **Objectifs principaux :**
 - Analyser les tendances électorales historiques (2012-2022)
